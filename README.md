@@ -12,3 +12,7 @@
  ## autoTrackPlugin
  支持在指定方法前，插入埋点代码
  支持Click事件Hook，运行时访问自定义代码
+
+# 参考
+[https://github.com/shenzhen2017/Android-ASM](https://github.com/shenzhen2017/Android-ASM)
+[https://github.com/Leifzhang/AndroidAutoTrack](https://github.com/Leifzhang/AndroidAutoTrack)
