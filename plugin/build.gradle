@@ -1,0 +1,51 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+        google()
+    }
+}
+
+plugins {
+//    `kotlin-dsl`
+    id "org.jetbrains.kotlin.jvm"
+    id "java-gradle-plugin"
+    id 'maven-publish'
+}
+
+repositories {
+    mavenCentral()
+    google()
+}
+
+dependencies {
+    implementation(gradleApi())
+    implementation("com.android.tools.build:gradle:7.2.0")
+    compileOnly("commons-io:commons-io:2.6")
+    compileOnly("commons-codec:commons-codec:1.15")
+    compileOnly("org.ow2.asm:asm-commons:9.2")
+    compileOnly("org.ow2.asm:asm-tree:9.2")
+}
+
+group 'com.webuy.asm'
+version '0.0.4'
+
+gradlePlugin {
+    plugins {
+        create("log") {
+            id = 'com.webuy.plugin.privacy.log'
+            implementationClass = 'com.a.plugin.privacylog.PrivacyLogPlugin'
+        }
+//        create("methodRecord") {
+//            id = 'com.webuy.plugin.method.record'
+//            implementationClass = 'com.a.plugin.methodrecord.MethodRecordPlugin'
+//        }
+    }
+}
+publishing {
+    repositories {
+        maven {
+            url '../repo'
+        }
+    }
+}
