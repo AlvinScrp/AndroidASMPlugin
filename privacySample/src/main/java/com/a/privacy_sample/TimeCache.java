@@ -1,4 +1,4 @@
-package com.a.app;
+package com.a.privacy_sample;
 
 import java.util.HashMap;
 import java.util.Map;
