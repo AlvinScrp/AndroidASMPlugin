@@ -8,6 +8,14 @@ public class PrivacyLog {
 
     public static void d(String message) {
         Log.d(TAG, Log.getStackTraceString(new Throwable(message)));
+//        Log.d(TAG,"message",new Throwable(message));
+        Log.d(TAG,"sds");
+    }
+
+    public static void e(String message) {
+        Log.w("alvin", Log.getStackTraceString(new Throwable(message)));
+//        Log.d(TAG,"message",new Throwable(message));
+        Log.w("alvin","eeeeeeeeeee");
     }
 
 }

@@ -1,7 +1,6 @@
 package com.a.plugin.privacylog
 
 import com.android.build.api.instrumentation.*
-import com.a.plugin.privacybase.PrivacyConfig
 import org.objectweb.asm.ClassVisitor
 
 abstract class PrivacyLogTransform: AsmClassVisitorFactory<InstrumentationParameters.None> {
@@ -12,8 +11,8 @@ abstract class PrivacyLogTransform: AsmClassVisitorFactory<InstrumentationParame
     }
 
     override fun isInstrumentable(classData: ClassData): Boolean {
-       var ignore =  PrivacyConfig.ignorePackages.any { classData.className.startsWith(it) }
-               || PrivacyConfig.ignoreClasses.contains(classData.className)
+       var ignore =  PrivacyLogConfig.ignorePackages.any { classData.className.startsWith(it) }
+               || PrivacyLogConfig.ignoreClasses.contains(classData.className)
 //       var  instrumentable =  PrivacyConst.checkClasses.contains(classData.className)
         var instrumentable = !ignore
 

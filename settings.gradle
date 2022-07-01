@@ -1,3 +1,4 @@
 rootProject.name = "AndroidASMPlugin"
 include ':privacySample'
 include ':app'
+include ':plugin'

@@ -3,8 +3,14 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 apply from: "${rootProject.rootDir}/task.gradle"
+
+
 import com.a.plugin.privacylog.PrivacyLogPlugin
 apply plugin: PrivacyLogPlugin
+privacyLog{
+    logMethod =  "cn/com/haoyiku/utils/privacy/PrivacyLog.e (Ljava/lang/String;)V"
+    ignorePackages = ["cn.com.haoyiku.utils.privacy"]
+}
 
 android {
     compileSdk 32

@@ -1,0 +1,10 @@
+[
+  {
+    "source": "INVOKEVIRTUAL android/telephony/TelephonyManager.getSimCountryIso ()Ljava/lang/String;",
+    "target": "INVOKEVIRTUAL com/webuy/common/utils/privacy/TelephonyManagerUtil.getSimCountryIso ()Ljava/lang/String;",
+    "includes": [],
+    "excludes": [
+      "com/webuy/common/utils/privacy/TelephonyManagerUtil"
+    ]
+  }
+]

@@ -1,6 +1,7 @@
 package com.a.privacy_sample;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
@@ -26,6 +27,15 @@ public class Hello {
             e.printStackTrace();
         }
         return "<unknown ssid>";
+
+    }
+    public static SharedPreferences getSharedPreferences(Context context) {
+        try {
+          return  context.getSharedPreferences("sdsd",Context.MODE_MULTI_PROCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
 
     }
 }

@@ -1,26 +1,29 @@
-package com.a.plugin.privacybase
+package com.a.plugin.privacylog
 
 import org.objectweb.asm.Opcodes
+import org.objectweb.asm.tree.FieldInsnNode
+import org.objectweb.asm.tree.MethodInsnNode
 
 /**
  * 参考
  * https://github.com/yanerchuang/PrivacyPolicyComplianceCheck/blob/master/app/src/main/java/com/ywj/xposeddemo/MainActivity.java
  * TelephonyManager信息获取：https://www.cnblogs.com/weixing/p/3253479.html
  */
-object PrivacyConfig {
+object PrivacyLogConfig {
 
-    var opCode= mutableMapOf(
+    var opCode = mutableMapOf(
         Opcodes.INVOKESTATIC to "INVOKESTATIC",
-        Opcodes.INVOKEVIRTUAL to "INVOKEVIRTUAL"
+        Opcodes.INVOKEVIRTUAL to "INVOKEVIRTUAL",
+        Opcodes.GETSTATIC to "GETSTATIC"
 
     )
 
-//    var Statement_log = "INVOKESTATIC cn/com/haoyiku/utils/privacy/PrivacyLog.d (Ljava/lang/String;)V"
-    var logMethodNode = MethodNode("cn/com/haoyiku/utils/privacy/PrivacyLog","d","(Ljava/lang/String;)V")
+    //    var Statement_log = "INVOKESTATIC cn/com/haoyiku/utils/privacy/PrivacyLog.d (Ljava/lang/String;)V"
+    var logMethodNode =
+        MethodInsnNode(Opcodes.INVOKESTATIC, "android/util/Log", "d", "(Ljava/lang/String;)I")
     var ignoreClasses: MutableSet<String> = mutableSetOf("cn.com.haoyiku.HykApp")
     var ignorePackages: MutableSet<String> =
         mutableSetOf(
-            "cn.com.haoyiku.utils.privacy",
             "kotlin",
             "kotlinx",
             "com.google.",
@@ -37,7 +40,7 @@ object PrivacyConfig {
     var checkClasses = mutableSetOf(
         "android/telephony/TelephonyManager",
         "android/net/wifi/WifiManager",
-        "android.net.ConnectivityManager",
+        "android/net/ConnectivityManager",
         "android/net/wifi/WifiInfo",
         "java/net/NetworkInterface",
         "java/lang/Runtime.exec",
@@ -45,12 +48,13 @@ object PrivacyConfig {
         "android/content/pm/PackageManager",
         "android/provider/Settings\$Secure",
         "android/provider/Settings\$System",
-        "android/content/ClipboardManager"
+        "android/content/ClipboardManager",
+        "android/os/Build"
     )
     var methodSet: MutableSet<String>
     var fieldSet: MutableSet<String> = mutableSetOf()
-    var methodHookValueSet: MutableSet<String> = mutableSetOf()
-    var fieldHookValueSet: MutableSet<String> = mutableSetOf()
+//    var methodHookValueSet: MutableSet<String> = mutableSetOf()
+//    var fieldHookValueSet: MutableSet<String> = mutableSetOf()
 
     //不可变设备信息 IMSI、IMEI，MEID ,SimSerialNumber,设备手机号，MAC地址
     var getSerial = "INVOKESTATIC android/os/Build.getSerial ()Ljava/lang/String;" //设备序列号
@@ -143,7 +147,9 @@ object PrivacyConfig {
         "INVOKEVIRTUAL android/content/ClipboardManager.getPrimaryClip ()Landroid/content/ClipData;" //剪切板
 
 
-    var Field_Serial = "android.os.Build.SERIAL"
+    //    var Field_Serial =
+//        FieldInsnNode(Opcodes.GETSTATIC, "android/os/Build", "SERIAL", "Ljava/lang/String;")
+    var Field_Serial = "GETSTATIC android/os/Build.SERIAL : Ljava/lang/String;"
 
     init {
         methodSet = mutableSetOf(
@@ -191,22 +197,22 @@ object PrivacyConfig {
             setClipText
         )
         fieldSet = mutableSetOf(Field_Serial)
-        methodHookValueSet = mutableSetOf(
-            getSerial,
-            getSubscriberId,
-            getDeviceId,
-            getImei,
-            getImei2,
-            getNai,
-            getMeid,
-            getMeid2,
-            getSimSerialNumber,
-            getMacAddress,
-            getHardwareAddress,
-            Secure_getString,
-            System_getString
-        )
-        fieldHookValueSet = mutableSetOf(Field_Serial)
+//        methodHookValueSet = mutableSetOf(
+//            getSerial,
+//            getSubscriberId,
+//            getDeviceId,
+//            getImei,
+//            getImei2,
+//            getNai,
+//            getMeid,
+//            getMeid2,
+//            getSimSerialNumber,
+//            getMacAddress,
+//            getHardwareAddress,
+//            Secure_getString,
+//            System_getString
+//        )
+//        fieldHookValueSet = mutableSetOf(Field_Serial)
 
     }
 

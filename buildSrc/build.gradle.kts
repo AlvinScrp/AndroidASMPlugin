@@ -17,3 +17,13 @@ dependencies {
     compileOnly("org.ow2.asm:asm-commons:9.2")
     compileOnly("org.ow2.asm:asm-tree:9.2")
 }
+
+sourceSets.main {
+    java.srcDirs("../plugin/src/main/java")
+}
+//
+//sourceSets{
+//    main{
+//        java.srcDirs.add(file("../plugin/src/main/java"))
+//    }
+//}
