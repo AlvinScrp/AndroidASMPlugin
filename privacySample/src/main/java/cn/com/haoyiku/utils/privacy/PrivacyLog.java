@@ -12,7 +12,7 @@ public class PrivacyLog {
         Log.d(TAG,"sds");
     }
 
-    public static void e(String message) {
+    public static void w(String message) {
         Log.w("alvin", Log.getStackTraceString(new Throwable(message)));
 //        Log.d(TAG,"message",new Throwable(message));
         Log.w("alvin","eeeeeeeeeee");

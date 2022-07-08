@@ -5,15 +5,24 @@ import android.content.SharedPreferences;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
+import cn.com.haoyiku.utils.privacy.PrivacyProxy;
+
 public class Hello {
 
-    public static String a(){
-       return Fake.getProcessName();
+    public static String a() {
+        Hello hello = new Hello();
+        String ans = hello.c("s1", "s2");
+        return ans;
 //        return "sdsd";
     }
 
-    public  String b(){
+    public String b() {
+//        PrivacyProxy.getSharedPreferences(HApp.context,"sdsd",Context.MODE_MULTI_PROCESS);
         return "b";
+    }
+
+    public String c(String str1, String str2) {
+        return str1 + str2;
     }
 
 
@@ -28,14 +37,7 @@ public class Hello {
         }
         return "<unknown ssid>";
 
-    }
-    public static SharedPreferences getSharedPreferences(Context context) {
-        try {
-          return  context.getSharedPreferences("sdsd",Context.MODE_MULTI_PROCESS);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
 
     }
+
 }

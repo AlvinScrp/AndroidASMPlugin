@@ -16,6 +16,7 @@ class PrivacyHookClassVisitor(nextVisitor: ClassVisitor, private val className: 
         callsignature: String?,
         callexceptions: Array<out String>?
     ): MethodVisitor {
+
         val methodVisitor =
             super.visitMethod(callaccess, callname, calldescriptor, callsignature, callexceptions)
         val newMethodVisitor =
@@ -29,33 +30,35 @@ class PrivacyHookClassVisitor(nextVisitor: ClassVisitor, private val className: 
                     descriptor: String?,
                     isInterface: Boolean
                 ) {
+
                     var source =
                         "${PrivacyHookConfig.opCode[opcodeAndSource]} ${owner}.$name $descriptor"
-                    var hookBean = PrivacyHookConfig.hooks[source]
-                    var target = hookBean
+//                    println(source)
+                    var hook = PrivacyHookConfig.hooks[source]
                         ?.takeIf { it != null }
-                        ?.takeIf {
-                            hookBean?.includes?.any { Pattern.matches(it, className) } ?: false
+                        ?.takeIf { it ->
+                            it.includes?.any { include -> Pattern.matches(include, className) }
+                                ?: false
                         }
                         ?.takeUnless {
-                            hookBean?.exclues?.any { Pattern.matches(it, className) } ?: false
-                        }?.let {
-                            it.target
+                            it.exclues?.any { exclude -> Pattern.matches(exclude, className) }
+                                ?: false
+                        }?.takeUnless {
+                            it?.owner.isNullOrEmpty() || it?.name.isNullOrEmpty()
                         }
 
-                    if (target != null) {
-                        mv.visitMethodInsn(
-                            INVOKESTATIC,
-                            target.owner,
-                            target.name,
-                            target.desc,
-                            false
-                        )
-                    } else {
+                    if (hook == null) {
                         super.visitMethodInsn(opcodeAndSource, owner, name, descriptor, isInterface)
+                        return
                     }
-
-
+                    var desc = descriptor
+                    if (opcodeAndSource == Opcodes.INVOKEVIRTUAL
+                        && descriptor.isNullOrEmpty().not()
+                    ) {
+                        desc = "(L${owner};${desc!!.substring(1)}"
+                    }
+                    println("${hook.owner}.${hook.name} $desc")
+                    mv.visitMethodInsn(INVOKESTATIC, hook.owner, hook.name, desc, false)
                 }
 
                 override fun visitFieldInsn(

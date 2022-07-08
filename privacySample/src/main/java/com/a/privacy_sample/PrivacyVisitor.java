@@ -6,6 +6,7 @@ import android.app.ActivityManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -73,6 +74,20 @@ public class PrivacyVisitor {
         return sb.toString();
     }
 
+
+    public static String getSimCountryIso(Context mContext) {
+        try {
+            TelephonyManager telephonyManager = (TelephonyManager) mContext.getSystemService(Context
+                    .TELEPHONY_SERVICE);
+            //获取ISO国家码，相当于提供SIM卡的国家码。
+            String simCountryIso = telephonyManager.getSimCountryIso();
+            return simCountryIso;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
     public static String getAndroidID(Context mContext) {
 
         String androidID = "";
@@ -84,6 +99,15 @@ public class PrivacyVisitor {
         }
     }
 
+        public static SharedPreferences getSharedPreferences(Context context) {
+        try {
+            return context.getSharedPreferences("sdsd", Context.MODE_MULTI_PROCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
     public static String getIMEI_DeviceId(Context context) {
         StringBuilder sb = new StringBuilder();
         try {
@@ -120,16 +144,6 @@ public class PrivacyVisitor {
             e.printStackTrace();
         }
         return "";
-
-    }
-
-
-    private void getSimCountryIso(Context context) {
-
-        TelephonyManager
-                telephonyManager =
-                (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-        String simCountryIso = telephonyManager.getSimCountryIso();
 
     }
 
@@ -335,13 +349,13 @@ public class PrivacyVisitor {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        try {
-            //手机号
-            //获取ISO国家码，相当于提供SIM卡的国家码。
-            String simCountryIso = telephonyManager.getSimCountryIso();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            //手机号
+//            //获取ISO国家码，相当于提供SIM卡的国家码。
+//            String simCountryIso = telephonyManager.getSimCountryIso();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         try {
             //手机号
             String ss = telephonyManager.getSimOperator();

@@ -10,7 +10,9 @@ open class PrivacyHookExtension {
 
 data class MethodHookBean(
 //    var source: String? = null,
-    var target: MethodInsnNode? = null,
+//    var target: MethodInsnNode? = null,
+    var owner:String?=null,
+    var name:String?=null,
     var includes: MutableSet<String>? = null,
     var exclues: MutableSet<String>? = null,
 )

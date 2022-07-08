@@ -28,7 +28,7 @@ dependencies {
 }
 
 group 'com.webuy.asm'
-version '1.0.4'
+version '0.0.1'
 
 gradlePlugin {
     plugins {

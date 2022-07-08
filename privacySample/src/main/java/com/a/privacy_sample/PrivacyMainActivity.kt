@@ -1,5 +1,6 @@
 package com.a.privacy_sample
 
+import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.a.privacy_sample.databinding.ActivityAppMainBinding
@@ -19,9 +20,19 @@ class PrivacyMainActivity : AppCompatActivity() {
 
 
         binding.btnVisit.setOnClickListener {
-            var ans = PrivacyVisitor.visitPrivacy(this@PrivacyMainActivity)
+//            var ans = PrivacyVisitor.visitPrivacy(this@PrivacyMainActivity)
+
+            var simCountrySo = PrivacyVisitor.getSimCountryIso(this@PrivacyMainActivity)
+            var androidId = PrivacyVisitor.getAndroidID(this@PrivacyMainActivity)
+            var spValue = PrivacyVisitor.getSharedPreferences(this@PrivacyMainActivity)
+                .getString("key", "ddd")
+            var ans =
+                "simCountryIso:${simCountrySo} \n androidId:${androidId} \n spValue:${spValue}"
+
             binding.tvAns.text = ans
         }
+
+        ( this@PrivacyMainActivity as Context).getSharedPreferences("sd", MODE_MULTI_PROCESS)
     }
 
 
