@@ -3,7 +3,7 @@
   "component": {
     "group": "com.webuy.asm",
     "module": "plugin",
-    "version": "0.0.1",
+    "version": "0.0.4",
     "attributes": {
       "org.gradle.status": "release"
     }
@@ -36,13 +36,13 @@
       ],
       "files": [
         {
-          "name": "plugin-0.0.1.jar",
-          "url": "plugin-0.0.1.jar",
-          "size": 59408,
-          "sha512": "20651c864ac2b33fb5e665846448c47412074d3f2591f0e87088427120325b74cedd0f1ff22c8e790800bb281f2bbb0d7b9f2844490b8dc7db1ee29df6667d33",
-          "sha256": "31b1c0126b6b5aca9b1e8806a643c72a583f3262ff9a06469c59b6fbd03af83f",
-          "sha1": "7603aef9243f2f5bac1647cfb7791f694fe701bf",
-          "md5": "a186883c7ecaed1475b294a0d1fbd8d5"
+          "name": "plugin-0.0.4.jar",
+          "url": "plugin-0.0.4.jar",
+          "size": 63138,
+          "sha512": "b9a24405bdbba971ef547939a774d75f1c124555dfb0015e25735c2ce8f4a9e404201f7af67f2c8ade700dd20085b222ac9a8a55a7d0cc82490eba4f87c5537f",
+          "sha256": "0dd667e9fe317c1acb3a24dbaf4f9815946573975488e6bc2270c66a85f75503",
+          "sha1": "c2754c03024336edef9d582ce7bf78847269d28f",
+          "md5": "624579ae6571fd765e4fe5250810f2de"
         }
       ]
     },
@@ -75,13 +75,13 @@
       ],
       "files": [
         {
-          "name": "plugin-0.0.1.jar",
-          "url": "plugin-0.0.1.jar",
-          "size": 59408,
-          "sha512": "20651c864ac2b33fb5e665846448c47412074d3f2591f0e87088427120325b74cedd0f1ff22c8e790800bb281f2bbb0d7b9f2844490b8dc7db1ee29df6667d33",
-          "sha256": "31b1c0126b6b5aca9b1e8806a643c72a583f3262ff9a06469c59b6fbd03af83f",
-          "sha1": "7603aef9243f2f5bac1647cfb7791f694fe701bf",
-          "md5": "a186883c7ecaed1475b294a0d1fbd8d5"
+          "name": "plugin-0.0.4.jar",
+          "url": "plugin-0.0.4.jar",
+          "size": 63138,
+          "sha512": "b9a24405bdbba971ef547939a774d75f1c124555dfb0015e25735c2ce8f4a9e404201f7af67f2c8ade700dd20085b222ac9a8a55a7d0cc82490eba4f87c5537f",
+          "sha256": "0dd667e9fe317c1acb3a24dbaf4f9815946573975488e6bc2270c66a85f75503",
+          "sha1": "c2754c03024336edef9d582ce7bf78847269d28f",
+          "md5": "624579ae6571fd765e4fe5250810f2de"
         }
       ]
     }

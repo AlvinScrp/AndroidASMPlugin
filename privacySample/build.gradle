@@ -5,14 +5,15 @@ plugins {
 apply from: "${rootProject.rootDir}/task.gradle"
 
 
-//import com.a.plugin.privacylog.PrivacyLogPlugin
-//apply plugin: PrivacyLogPlugin
-//privacyLog{
-//    logMethod =  "cn/com/haoyiku/utils/privacy/PrivacyLog.e (Ljava/lang/String;)V"
-//    ignorePackages = ["cn.com.haoyiku.utils.privacy"]
-//}
-import com.a.plugin.privacyhook.PrivacyHookPlugin
-apply plugin: PrivacyHookPlugin
+import com.a.plugin.privacylog.PrivacyLogPlugin
+apply plugin: PrivacyLogPlugin
+privacyLog{
+    logMethod =  "cn/com/haoyiku/utils/privacy/PrivacyLog.w (Ljava/lang/String;)V"
+    ignorePackages = ["cn.com.haoyiku.utils.privacy.*"]
+    cacheOutputs = false
+}
+//import com.a.plugin.privacyhook.PrivacyHookPlugin
+//apply plugin: PrivacyHookPlugin
 
 android {
     compileSdk 32

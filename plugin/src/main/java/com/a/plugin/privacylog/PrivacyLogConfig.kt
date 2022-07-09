@@ -24,18 +24,18 @@ object PrivacyLogConfig {
     var ignoreClasses: MutableSet<String> = mutableSetOf("cn.com.haoyiku.HykApp")
     var ignorePackages: MutableSet<String> =
         mutableSetOf(
-            "kotlin",
-            "kotlinx",
-            "com.google.",
-            "org.jetbrains",
-            "org.objectweb",
-            "org.intellij",
-            "androidx",
-            "android.",
-            "io.flutter",
-            "com.ta.a.d.e",
-            "com.ta.utdid2.device.c",
-            "com.idlefish"
+            "kotlin.*",
+            "kotlinx.*",
+            "com.google.*",
+            "org.jetbrains.*",
+            "org.objectweb.*",
+            "org.intellij.*",
+            "androidx.*",
+            "android.*",
+            "io.flutter.*",
+            "com.ta.a.d.e",//full path class
+            "com.ta.utdid2.device.c",//full path class
+            "com.idlefish.*"
         )
     var checkClasses = mutableSetOf(
         "android/telephony/TelephonyManager",

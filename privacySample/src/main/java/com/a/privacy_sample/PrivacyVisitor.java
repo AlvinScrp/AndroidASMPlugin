@@ -416,7 +416,7 @@ public class PrivacyVisitor {
              *    在CDMA网络中结果也许不可靠。
 
              */
-            String networkoperator = telephonyManager.getNetworkOperator();
+//            String networkoperator = telephonyManager.getNetworkOperator();
         } catch (Exception e) {
             e.printStackTrace();
         }

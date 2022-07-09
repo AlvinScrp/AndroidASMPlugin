@@ -32,7 +32,7 @@ class BuildTimeListener implements TaskExecutionListener, BuildListener {
         })
         taskTimeInfos.each { info ->
             {
-                if (info.total > 10L) {
+                if (info.total > 10L && info.path.matches(".*Asm.*")) {
                     println "${info.path}:[${info.total}ms]"
                 }
             }

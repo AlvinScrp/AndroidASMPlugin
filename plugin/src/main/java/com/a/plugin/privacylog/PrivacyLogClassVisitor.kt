@@ -53,9 +53,11 @@ class PrivacyLogClassVisitor(nextVisitor: ClassVisitor, private val className: S
                     name: String?,
                     descriptor: String?
                 ) {
-                    println("--------------------------------------------------")
-                    println("${PrivacyLogConfig.opCode[opcode]} ${owner}.${name} ${descriptor}")
-                    println("call by: ${className}.${callname} ${calldescriptor}")
+                    val msg = "------\n" +
+                            "${PrivacyLogConfig.opCode[opcode]} ${owner}.${name} ${descriptor}\n" +
+                            "call by: ${className}.${callname} ${calldescriptor}\n"
+                    println(msg)
+                    PrivacyLogFileUtil.record(msg+"\n")
                     var log = PrivacyLogConfig.logMethodNode
                     mv.visitLdcInsn("${owner}.${name}")
                     mv.visitMethodInsn(INVOKESTATIC, log.owner, log.name, log.desc, false)
