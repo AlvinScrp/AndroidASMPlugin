@@ -1,0 +1,17 @@
+{
+  "outputBuild": true,
+  "outputConsole": true,
+  "resumeIncludes": [
+    "com/webuy/common/base/CBaseFragment",
+    "com/webuy/platform/jlbbx/base/BbxBaseFragment",
+    "com/webuy/web/ui/WebFragment",
+    "com/webuy/jlcommon/base/BaseFragment"
+  ],
+  "resumeProbe": "com/webuy/autotrack/AutoTrackUtil autoCurrentPage (Landroidx/fragment/app/Fragment;)V",
+  "hookClickLambda": true,
+  "clickIncludes": [
+    "com/webuy/.*",
+    "com/a/asm/.*"
+  ],
+  "clickProbe": "com/webuy/autotrack/AutoTrackUtil autoTrackClick (Landroid/view/View;)V"
+}

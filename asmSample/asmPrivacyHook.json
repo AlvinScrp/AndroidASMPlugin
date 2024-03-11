@@ -1,0 +1,102 @@
+{
+  "outputBuild": true,
+  "outputConsole": true,
+  "globalExcludeClasses": [
+    "com/ta/a/d/e/.*",
+    "com/ta/utdid2/device/c/.*",
+    "com/idlefish/.*",
+    "com/webuy/common/utils/privacy.*"
+  ],
+  "hooks": [
+    {
+      "source": "android/provider/Settings$Secure getString (Landroid/content/ContentResolver;Ljava/lang/String;)Ljava/lang/String;",
+      "target": "com/webuy/common/utils/privacy/PrivacyHook getSecureAndroidId (Landroid/content/ContentResolver;Ljava/lang/String;)Ljava/lang/String;",
+      "includes": [
+        ".*"
+      ],
+      "excludes": [
+        "com/webuy/common/utils/privacy.*"
+      ]
+    },
+    {
+      "source": "android/provider/Settings$System getString (Landroid/content/ContentResolver;Ljava/lang/String;)Ljava/lang/String;",
+      "target": "com/webuy/common/utils/privacy/PrivacyHook getSystemAndroidId (Landroid/content/ContentResolver;Ljava/lang/String;)Ljava/lang/String;",
+      "includes": [
+        ".*"
+      ],
+      "excludes": [
+        "com/webuy/common/utils/privacy.*"
+      ]
+    },
+    {
+      "source": "android/telephony/TelephonyManager getDeviceId ()Ljava/lang/String;",
+      "target": "com/webuy/common/utils/privacy/PrivacyHook getDeviceId (Landroid/telephony/TelephonyManager;)Ljava/lang/String;",
+      "includes": [
+        ".*"
+      ],
+      "excludes": [
+        "com/webuy/common/utils/privacy.*"
+      ]
+    },
+    {
+      "source": "android/telephony/TelephonyManager getImei ()Ljava/lang/String;",
+      "target": "com/webuy/common/utils/privacy/PrivacyHook getImei (Landroid/telephony/TelephonyManager;)Ljava/lang/String;",
+      "includes": [
+        ".*"
+      ],
+      "excludes": [
+        "com/webuy/common/utils/privacy.*"
+      ]
+    },
+    {
+      "source": "android/telephony/TelephonyManager getNai ()Ljava/lang/String;",
+      "target": "com/webuy/common/utils/privacy/PrivacyHook getNai (Landroid/telephony/TelephonyManager;)Ljava/lang/String;",
+      "includes": [
+        ".*"
+      ],
+      "excludes": [
+        "com/webuy/common/utils/privacy.*"
+      ]
+    },
+    {
+      "source": "android/content/Context getSharedPreferences (Ljava/lang/String;I)Landroid/content/SharedPreferences;",
+      "target": "com/webuy/common/utils/privacy/PrivacyHook getHookedSharedPreferences (Landroid/content/Context;Ljava/lang/String;I)Landroid/content/SharedPreferences;",
+      "includes": [
+        ".*"
+      ],
+      "excludes": [
+        "com/webuy/common/utils/privacy.*"
+      ]
+    },
+    {
+      "source": "android/telephony/TelephonyManager getSimCountryIso ()Ljava/lang/String;",
+      "target": "com/webuy/common/utils/privacy/PrivacyHook getSimCountryIso (Landroid/telephony/TelephonyManager;)Ljava/lang/String;",
+      "includes": [
+        ".*"
+      ],
+      "excludes": [
+        "com/webuy/common/utils/privacy.*"
+      ]
+    },
+    {
+      "source": "android/telephony/TelephonyManager getSubscriberId ()Ljava/lang/String;",
+      "target": "com/webuy/common/utils/privacy/PrivacyHook getSubscriberId (Landroid/telephony/TelephonyManager;)Ljava/lang/String;",
+      "includes": [
+        ".*"
+      ],
+      "excludes": [
+        "com/webuy/common/utils/privacy.*"
+      ]
+    },
+    {
+      "source": "anet/channel/util/Utils getProcessName (Landroid/content/Context;I)Ljava/lang/String;",
+      "target": "com/webuy/common/utils/privacy/PrivacyHook getProcessNameNew (Landroid/content/Context;I)Ljava/lang/String;",
+      "includes": [
+        ".*"
+      ],
+      "excludes": [
+        "com/webuy/common/utils/privacy.*"
+      ]
+    }
+  ]
+}

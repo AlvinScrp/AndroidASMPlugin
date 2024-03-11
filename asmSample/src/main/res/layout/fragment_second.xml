@@ -1,0 +1,39 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.webuy.common.base.CBaseFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_blank_fragment" />
+
+    <TextView
+        android:id="@+id/tvAns"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:background="#550000ff"
+        android:gravity="center"
+        android:text="tvAns" />
+
+    <TextView
+        android:id="@+id/tvObject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="#55ff00ff"
+        android:padding="12dp"
+        android:text="object Listener" />
+
+    <TextView
+        android:id="@+id/tvWrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#55ff00ff"
+        android:padding="12dp"
+        android:text="包装的 Listener" />
+
+</LinearLayout>

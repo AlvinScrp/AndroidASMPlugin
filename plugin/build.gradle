@@ -20,21 +20,32 @@ repositories {
 
 dependencies {
     implementation(gradleApi())
-    implementation("com.android.tools.build:gradle:7.2.0")
-    compileOnly("commons-io:commons-io:2.6")
-    compileOnly("commons-codec:commons-codec:1.15")
+    implementation("com.android.tools.build:gradle:7.4.2")
+    testImplementation 'junit:junit:4.12'
+//    implementation("commons-io:commons-io:2.6")
+//    compileOnly("commons-codec:commons-codec:1.15")
     compileOnly("org.ow2.asm:asm-commons:9.2")
     compileOnly("org.ow2.asm:asm-tree:9.2")
+    compileOnly("com.google.code.gson:gson:2.8.2")
+//    compileOnly("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.15.0")
 }
 
-group 'com.webuy.asm'
-version '0.0.4'
+group 'com.a.asm'
+version '2.0.0-alpha01'
 
 gradlePlugin {
     plugins {
-        create("log") {
-            id = 'com.webuy.plugin.privacy.log'
+        create("privacyLog") {
+            id = 'com.a.asm.privacy.log'
             implementationClass = 'com.a.plugin.privacylog.PrivacyLogPlugin'
+        }
+        create("privacyHook") {
+            id = 'com.a.asm.privacy.hook'
+            implementationClass = 'com.a.plugin.privacyhook.PrivacyHookPlugin'
+        }
+        create("autoTrack") {
+            id = 'com.a.asm.autoTrack'
+            implementationClass = 'com.a.plugin.autotrack.AutoTrackPlugin'
         }
 //        create("methodRecord") {
 //            id = 'com.webuy.plugin.method.record'
