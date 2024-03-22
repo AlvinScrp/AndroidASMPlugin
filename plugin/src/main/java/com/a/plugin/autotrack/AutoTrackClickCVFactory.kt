@@ -66,8 +66,8 @@ class AutoTrackClickClassVisitor(classVisitor: ClassVisitor?) : ClassNode(Opcode
                 && clickSource.name == methodNode.name
                 && clickSource.desc == methodNode.desc
             ) {
-                context.output() {
-                    "---NormalMethodNode--> ${methodNode.name}${methodNode.desc}   [className:${name}]"
+                context.output {
+                    "---NormalClick-> ${methodNode.name}${methodNode.desc}  [${name}]\n"
                 }
                 methodList.add(methodNode)
             }
@@ -102,8 +102,8 @@ class AutoTrackClickClassVisitor(classVisitor: ClassVisitor?) : ClassNode(Opcode
                 //bsmArgs[2]  instantiatedMethodType  (Landroid/view/View;)V
                 val handle = insn.bsmArgs[1] as? Handle //implMethod  lambda 指向的目标方法
                 if (handle != null) {
-                    context.output() {
-                        "---InvokeDynamicInsnNode ->  $samMethodName$samMethodDescriptor  [className:${name}]"
+                    context.output {
+                        "---DynamicClick->  $samMethodName$samMethodDescriptor  [${name}]\n"
                     }
                     //找到 lambda 指向的目标方法
                     val method = methods.find { it.name == handle.name && it.desc == handle.desc }!!

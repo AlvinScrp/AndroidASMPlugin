@@ -31,7 +31,7 @@ dependencies {
 }
 
 group 'com.a.asm'
-version '2.0.0-alpha02'
+version '2.0.0-alpha03'
 
 gradlePlugin {
     plugins {

@@ -51,7 +51,7 @@ class AutoTrackResumeClassVisitor(classVisitor: ClassVisitor?) :
         for (methodNode in methods) {
             if (methodNode.name == ResumeMethodName && methodNode.desc == ResumeMethodDescriptor) {
                 context.output {
-                    "---FragmentMethodNode--> ${methodNode.name}${methodNode.desc} [className:${name}]\n"
+                    "---FragmentResume--> ${methodNode.name}${methodNode.desc}  [${name}]\n"
                 }
                 methodList.add(methodNode)
             }
