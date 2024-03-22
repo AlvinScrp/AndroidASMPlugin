@@ -1,9 +1,6 @@
 package com.a.plugin.privacylog
 
 import com.a.plugin.common.InstrumentationParametersImpl
-import com.a.plugin.common.RecordSaveUtil
-import com.a.plugin.common.output
-import com.a.plugin.privacyhook.PrivacyHookContext
 import com.android.build.api.instrumentation.*
 import org.objectweb.asm.ClassVisitor
 import org.objectweb.asm.MethodVisitor
@@ -11,7 +8,7 @@ import org.objectweb.asm.Opcodes
 import org.objectweb.asm.commons.AdviceAdapter
 
 
-abstract class PrivacyLogTransform : AsmClassVisitorFactory<InstrumentationParametersImpl> {
+abstract class PrivacyLogCVFactory : AsmClassVisitorFactory<InstrumentationParametersImpl> {
 
 
     override fun createClassVisitor(classContext: ClassContext, nextClassVisitor: ClassVisitor): ClassVisitor {
@@ -23,10 +20,10 @@ abstract class PrivacyLogTransform : AsmClassVisitorFactory<InstrumentationParam
     }
 }
 
-class PrivacyLogClassVisitor(nextVisitor: ClassVisitor) :
-    ClassVisitor(Opcodes.ASM9, nextVisitor) {
+class PrivacyLogClassVisitor(nextVisitor: ClassVisitor) : ClassVisitor(Opcodes.ASM9, nextVisitor) {
 
-    private var classNameSplash: String? = null
+    private val context = PrivacyLogContext
+    private var classNameSlash: String? = null
 
     override fun visit(
         version: Int,
@@ -36,7 +33,7 @@ class PrivacyLogClassVisitor(nextVisitor: ClassVisitor) :
         superName: String?,
         interfaces: Array<out String>?
     ) {
-        classNameSplash = name
+        classNameSlash = name
         super.visit(version, access, name, signature, superName, interfaces)
     }
 
@@ -80,12 +77,12 @@ class PrivacyLogClassVisitor(nextVisitor: ClassVisitor) :
                 }
 
                 private fun addLog(owner: String?, name: String?, descriptor: String?) {
-                    output(PrivacyHookContext.config) {
+                    context.output {
                         "------privacy_log--\n" +
                             "$owner $name ${descriptor}\n" +
-                            "call by: $classNameSplash $callname ${calldescriptor}\n"
+                            "call by: $classNameSlash $callname ${calldescriptor}\n"
                     }
-                    PrivacyLogContext.config?.logInsn?.let { log ->
+                    context.config?.logInsn?.let { log ->
                         mv.visitLdcInsn("${owner}.${name}")
                         mv.visitMethodInsn(INVOKESTATIC, log.owner, log.name, log.desc, false)
                     }
@@ -100,12 +97,12 @@ class PrivacyLogClassVisitor(nextVisitor: ClassVisitor) :
     private fun isMethodInsnMatched(owner: String?, name: String?, descriptor: String?): Boolean {
         val space = " "
         var source = "${owner}${space}$name${space}$descriptor"
-        return PrivacyLogContext.config?.includeMethods?.contains(source) == true
+        return context.config?.includeMethods?.contains(source) == true
     }
 
     private fun isFieldInsnMatched(owner: String?, name: String?, descriptor: String?): Boolean {
         val space = " "
         var source = "${owner}${space}$name${space}$descriptor"
-        return PrivacyLogContext.config?.includeFields?.contains(source) == true
+        return context.config?.includeFields?.contains(source) == true
     }
 }

@@ -1,7 +1,6 @@
 package com.a.plugin.autotrack
 
 import com.a.plugin.common.InstrumentationParametersImpl
-import com.a.plugin.common.output
 import com.android.build.api.instrumentation.AsmClassVisitorFactory
 import com.android.build.api.instrumentation.ClassContext
 import com.android.build.api.instrumentation.ClassData
@@ -14,7 +13,8 @@ import org.objectweb.asm.tree.MethodNode
 import org.objectweb.asm.tree.VarInsnNode
 
 
-abstract class AutoTrackResumeAsmTransform : AsmClassVisitorFactory<InstrumentationParametersImpl> {
+abstract class AutoTrackResumeCVFactory :
+    AsmClassVisitorFactory<InstrumentationParametersImpl> {
 
     override fun createClassVisitor(classContext: ClassContext, nextClassVisitor: ClassVisitor)
         : ClassVisitor {
@@ -26,7 +26,9 @@ abstract class AutoTrackResumeAsmTransform : AsmClassVisitorFactory<Instrumentat
     }
 }
 
-class AutoTrackResumeClassVisitor(classVisitor: ClassVisitor?) : ClassNode(Opcodes.ASM9) {
+class AutoTrackResumeClassVisitor(classVisitor: ClassVisitor?) :
+    ClassNode(Opcodes.ASM9) {
+    private val context = AutoTrackContext
 
     init {
         cv = classVisitor
@@ -48,8 +50,8 @@ class AutoTrackResumeClassVisitor(classVisitor: ClassVisitor?) : ClassNode(Opcod
 
         for (methodNode in methods) {
             if (methodNode.name == ResumeMethodName && methodNode.desc == ResumeMethodDescriptor) {
-                output(AutoTrackContext.config) {
-                    "---FragmentMethodNode--> ${methodNode.name}${methodNode.desc} [className:${name}]"
+                context.output {
+                    "---FragmentMethodNode--> ${methodNode.name}${methodNode.desc} [className:${name}]\n"
                 }
                 methodList.add(methodNode)
             }
@@ -58,7 +60,7 @@ class AutoTrackResumeClassVisitor(classVisitor: ClassVisitor?) : ClassNode(Opcod
     }
 
     private fun insertResumeTrack(methodNode: MethodNode) {
-        val t = AutoTrackContext.config?.resumeProbeInsn ?: return
+        val t = context.config?.resumeProbeInsn ?: return
         methodNode.instructions.takeIf { it != null && it.size() > 0 }
             ?.let { instructions ->
                 val list = InsnList()

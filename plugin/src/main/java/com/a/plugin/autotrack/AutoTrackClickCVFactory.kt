@@ -1,7 +1,6 @@
 package com.a.plugin.autotrack
 
 import com.a.plugin.common.InstrumentationParametersImpl
-import com.a.plugin.common.output
 import com.android.build.api.instrumentation.AsmClassVisitorFactory
 import com.android.build.api.instrumentation.ClassContext
 import com.android.build.api.instrumentation.ClassData
@@ -17,7 +16,7 @@ import org.objectweb.asm.tree.VarInsnNode
 import org.objectweb.asm.Type
 
 
-abstract class AutoTrackClickAsmTransform : AsmClassVisitorFactory<InstrumentationParametersImpl> {
+abstract class AutoTrackClickCVFactory : AsmClassVisitorFactory<InstrumentationParametersImpl> {
 
     override fun createClassVisitor(classContext: ClassContext, nextClassVisitor: ClassVisitor)
         : ClassVisitor {
@@ -30,6 +29,7 @@ abstract class AutoTrackClickAsmTransform : AsmClassVisitorFactory<Instrumentati
 }
 
 class AutoTrackClickClassVisitor(classVisitor: ClassVisitor?) : ClassNode(Opcodes.ASM9) {
+    private val context = AutoTrackContext
 
     init {
         cv = classVisitor
@@ -50,7 +50,7 @@ class AutoTrackClickClassVisitor(classVisitor: ClassVisitor?) : ClassNode(Opcode
     override fun visitEnd() {
         super.visitEnd()
         filterNormalMethodNodes().forEach { hookMethod(it) }
-        if (AutoTrackContext.config?.hookClickLambda == true) {
+        if (context.config?.hookClickLambda == true) {
             filterLambdaImplMethodNodes().forEach { hookMethod(it) }
         }
         accept(cv)
@@ -66,7 +66,7 @@ class AutoTrackClickClassVisitor(classVisitor: ClassVisitor?) : ClassNode(Opcode
                 && clickSource.name == methodNode.name
                 && clickSource.desc == methodNode.desc
             ) {
-                output(AutoTrackContext.config) {
+                context.output() {
                     "---NormalMethodNode--> ${methodNode.name}${methodNode.desc}   [className:${name}]"
                 }
                 methodList.add(methodNode)
@@ -102,7 +102,7 @@ class AutoTrackClickClassVisitor(classVisitor: ClassVisitor?) : ClassNode(Opcode
                 //bsmArgs[2]  instantiatedMethodType  (Landroid/view/View;)V
                 val handle = insn.bsmArgs[1] as? Handle //implMethod  lambda 指向的目标方法
                 if (handle != null) {
-                    output(AutoTrackContext.config) {
+                    context.output() {
                         "---InvokeDynamicInsnNode ->  $samMethodName$samMethodDescriptor  [className:${name}]"
                     }
                     //找到 lambda 指向的目标方法
@@ -115,7 +115,7 @@ class AutoTrackClickClassVisitor(classVisitor: ClassVisitor?) : ClassNode(Opcode
     }
 
     private fun hookMethod(methodNode: MethodNode) {
-        val t = AutoTrackContext.config?.clickProbeInsn ?: return
+        val t = context.config?.clickProbeInsn ?: return
         methodNode.instructions.takeIf { it != null && it.size() > 0 }
             ?.let { instructions ->
                 val list = InsnList()

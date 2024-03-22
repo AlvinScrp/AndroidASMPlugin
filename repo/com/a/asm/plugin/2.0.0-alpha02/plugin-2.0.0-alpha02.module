@@ -3,7 +3,7 @@
   "component": {
     "group": "com.a.asm",
     "module": "plugin",
-    "version": "2.0.0-alpha01",
+    "version": "2.0.0-alpha02",
     "attributes": {
       "org.gradle.status": "release"
     }
@@ -36,13 +36,13 @@
       ],
       "files": [
         {
-          "name": "plugin-2.0.0-alpha01.jar",
-          "url": "plugin-2.0.0-alpha01.jar",
-          "size": 104002,
-          "sha512": "4ed25385c9eb3a051aec6a4fff0ee62a35ee9dce97ba5114b53cd7741bab3b919d5ae5787aa39925a2ba7d1bfe9f5f844ffa791ac977420fef3f21cc17178f75",
-          "sha256": "558de170ab460d9652e9a89c989c742d236b7b56da420a073dcba7b80a9aaf5a",
-          "sha1": "963e4a299c69d64efa5458966e9decab0c7b72d3",
-          "md5": "12131ceff26567b3cd7550e967d1a788"
+          "name": "plugin-2.0.0-alpha02.jar",
+          "url": "plugin-2.0.0-alpha02.jar",
+          "size": 104088,
+          "sha512": "f4c5803229c5d378fbd2268a845be954c3d8af04786fa73151d30987c869de32b0789616975e348b78d30e191124825316cde775a61357d26f30cded2821e325",
+          "sha256": "f86e30608ece28a5532f66abaf8d7eb3120a7993bfa3daf4ee280eab58d3beae",
+          "sha1": "19d8e3fb7b6a1834a270d8d725ba179b6324efd3",
+          "md5": "4d5c964beb2e27b9e0d859ea33314d7f"
         }
       ]
     },
@@ -75,13 +75,13 @@
       ],
       "files": [
         {
-          "name": "plugin-2.0.0-alpha01.jar",
-          "url": "plugin-2.0.0-alpha01.jar",
-          "size": 104002,
-          "sha512": "4ed25385c9eb3a051aec6a4fff0ee62a35ee9dce97ba5114b53cd7741bab3b919d5ae5787aa39925a2ba7d1bfe9f5f844ffa791ac977420fef3f21cc17178f75",
-          "sha256": "558de170ab460d9652e9a89c989c742d236b7b56da420a073dcba7b80a9aaf5a",
-          "sha1": "963e4a299c69d64efa5458966e9decab0c7b72d3",
-          "md5": "12131ceff26567b3cd7550e967d1a788"
+          "name": "plugin-2.0.0-alpha02.jar",
+          "url": "plugin-2.0.0-alpha02.jar",
+          "size": 104088,
+          "sha512": "f4c5803229c5d378fbd2268a845be954c3d8af04786fa73151d30987c869de32b0789616975e348b78d30e191124825316cde775a61357d26f30cded2821e325",
+          "sha256": "f86e30608ece28a5532f66abaf8d7eb3120a7993bfa3daf4ee280eab58d3beae",
+          "sha1": "19d8e3fb7b6a1834a270d8d725ba179b6324efd3",
+          "md5": "4d5c964beb2e27b9e0d859ea33314d7f"
         }
       ]
     }

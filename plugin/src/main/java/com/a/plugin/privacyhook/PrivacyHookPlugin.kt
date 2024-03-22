@@ -1,6 +1,5 @@
 package com.a.plugin.privacyhook
 
-import com.a.plugin.common.RecordSaveUtil
 import com.android.build.api.instrumentation.FramesComputationMode
 import com.android.build.api.instrumentation.InstrumentationScope
 import com.android.build.api.variant.AndroidComponentsExtension
@@ -17,14 +16,14 @@ class PrivacyHookPlugin : Plugin<Project> {
 //            println("${project.name} ${variant.name}")
             if (variant is ApplicationVariant) {
                 PrivacyHookContext.configByExtension(project)
-                if (PrivacyHookContext.enable) {
-                    RecordSaveUtil.initRecordFile(project.buildDir.absolutePath)
+                val context = PrivacyHookContext
+                if (context.enable) {
 //                    println(variant.instrumentation.toString())
                     variant.instrumentation.transformClassesWith(
                         PrivacyHookCVFactory::class.java,
                         InstrumentationScope.ALL
                     ) {
-                        it.configSign.set(PrivacyHookContext.configSign)
+                        it.configSign.set(context.configSign)
                     }
                     variant.instrumentation.setAsmFramesComputationMode(
                         FramesComputationMode.COMPUTE_FRAMES_FOR_INSTRUMENTED_METHODS

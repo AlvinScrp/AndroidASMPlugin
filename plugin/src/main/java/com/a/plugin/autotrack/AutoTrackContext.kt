@@ -1,15 +1,14 @@
 package com.a.plugin.autotrack
 
+import com.a.plugin.common.BuildCacheLogger
 import com.a.plugin.common.ConfigUtil
 import com.a.plugin.common.DigestUtil
 import com.a.plugin.common.IConfigBean
-import com.a.plugin.common.RecordSaveUtil
+import com.a.plugin.common.PluginBaseContext
 import com.a.plugin.common.classNameSlash
 import com.a.plugin.common.fromJson
 import com.a.plugin.common.toMethodInsnNode
-import com.a.plugin.privacylog.PrivacyLogExtension
 import com.android.build.api.instrumentation.ClassData
-import com.google.gson.Gson
 import org.gradle.api.Project
 import org.objectweb.asm.tree.MethodInsnNode
 import java.io.File
@@ -35,25 +34,18 @@ class AutoTrackConfigBean(
 
 }
 
-
-
-
-object AutoTrackContext {
-    var enable = true
-    var config: AutoTrackConfigBean? = null
-    var configSign: String = ""
+object AutoTrackContext : PluginBaseContext<AutoTrackConfigBean>() {
 
     fun configByExtension(project: Project) {
-        config = null
-        val extension =
-            project.extensions.getByType(AutoTrackExtension::class.java)
-                ?.takeIf { it.enable } ?: throw IllegalArgumentException("Auto Track 配置失败")
+        logger = BuildCacheLogger("${project.buildDir}/asm_autoTrack.txt")
 
+        val extension = project.extensions.getByType(AutoTrackExtension::class.java)
+            ?: throw IllegalArgumentException("Auto Track 配置失败")
+        enable = extension.enable
         val json = ConfigUtil.fromFile(extension?.configFile)
         configSign = "${DigestUtil.md5(json)})-${extension.enable}"
 
         config = json.fromJson()
-        println("=====autoTrackJson====${Gson().toJson(config)}")
         config?.let {
             it.clickProbeInsn = it.clickProbe?.toMethodInsnNode()
             it.resumeProbeInsn = it.resumeProbe?.toMethodInsnNode()
@@ -68,7 +60,6 @@ object AutoTrackContext {
     fun isResumeInstrumentable(classData: ClassData): Boolean {
         return config?.resumeIncludes?.any { Pattern.matches(it, classData.classNameSlash()) } == true
     }
-
 
 
 }

@@ -1,11 +1,9 @@
 package com.a.plugin.privacylog
 
-import com.a.plugin.common.RecordSaveUtil
 import com.android.build.api.instrumentation.FramesComputationMode
 import com.android.build.api.instrumentation.InstrumentationScope
 import com.android.build.api.variant.AndroidComponentsExtension
 import com.android.build.api.variant.ApplicationVariant
-import com.google.gson.Gson
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import java.util.*
@@ -20,10 +18,9 @@ class PrivacyLogPlugin : Plugin<Project> {
             if (variant is ApplicationVariant) {
                 PrivacyLogContext.configByExtension(project)
                 if (PrivacyLogContext.enable) {
-                    RecordSaveUtil.initRecordFile(project.buildDir.absolutePath)
                     variants.add(variant)
                     variant.instrumentation.transformClassesWith(
-                        PrivacyLogTransform::class.java,
+                        PrivacyLogCVFactory::class.java,
                         InstrumentationScope.ALL
                     ) {
                         it.configSign.set(PrivacyLogContext.configSign)

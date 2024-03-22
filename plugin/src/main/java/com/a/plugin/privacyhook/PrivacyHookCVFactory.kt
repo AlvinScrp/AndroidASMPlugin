@@ -1,8 +1,6 @@
 package com.a.plugin.privacyhook
 
 import com.a.plugin.common.InstrumentationParametersImpl
-import com.a.plugin.common.RecordSaveUtil
-import com.a.plugin.common.output
 import com.android.build.api.instrumentation.*
 import org.objectweb.asm.ClassVisitor
 import org.objectweb.asm.MethodVisitor
@@ -24,6 +22,8 @@ abstract class PrivacyHookCVFactory : AsmClassVisitorFactory<InstrumentationPara
 
 class PrivacyHookClassVisitor(nextVisitor: ClassVisitor) :
     ClassVisitor(Opcodes.ASM9, nextVisitor) {
+
+    private val context = PrivacyHookContext
 
     private var classNameSplash: String? = null
 
@@ -64,11 +64,11 @@ class PrivacyHookClassVisitor(nextVisitor: ClassVisitor) :
 
                     var source = "$owner $name $descriptor"
 //                    println(source)
-                    var t = PrivacyHookContext.hookMap[source]
+                    var t = context.hookMap[source]
                         ?.takeIf { it.filterClassName(classNameSplash) }
                         ?.targetInsn
                     if (t != null) {
-                        output(PrivacyHookContext.config) {
+                        context.output() {
                             "------privacy_hook--\n" +
                                 "$owner $name ${descriptor}\n" +
                                 "call by: $classNameSplash $callname ${calldescriptor}\n"

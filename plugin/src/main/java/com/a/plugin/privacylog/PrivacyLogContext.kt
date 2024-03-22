@@ -1,8 +1,10 @@
 package com.a.plugin.privacylog
 
+import com.a.plugin.common.BuildCacheLogger
 import com.a.plugin.common.ConfigUtil
 import com.a.plugin.common.DigestUtil
 import com.a.plugin.common.IConfigBean
+import com.a.plugin.common.PluginBaseContext
 import com.a.plugin.common.classNameSlash
 import com.a.plugin.common.fromJson
 import com.a.plugin.common.toMethodInsnNode
@@ -35,11 +37,7 @@ class PrivacyLogConfigBean(
 }
 
 
-object PrivacyLogContext {
-    var enable = true
-    var extension: PrivacyLogExtension? = null
-    var config: PrivacyLogConfigBean? = null
-    var configSign: String = ""
+object PrivacyLogContext : PluginBaseContext<PrivacyLogConfigBean>() {
 
     private var AlwaysExcludeClasses: MutableSet<String> = mutableSetOf(
         "kotlin/.*",
@@ -55,14 +53,15 @@ object PrivacyLogContext {
 
 
     fun configByExtension(project: Project) {
-        extension = project.extensions.getByType(PrivacyLogExtension::class.java)
-            ?.takeIf { it.enable } ?: throw IllegalArgumentException("privacy log 配置失败")
+        logger = BuildCacheLogger("${project.buildDir}/asm_privacy_log.txt")
 
+        val extension = project.extensions.getByType(PrivacyLogExtension::class.java)
+            ?: throw IllegalArgumentException("privacy log 配置失败")
         val json = ConfigUtil.fromFile(extension?.configFile)
-        configSign =
-            "${DigestUtil.md5(json)})-${extension?.enable}"
-        config = json.fromJson()
+        enable = extension.enable
+        configSign = "${DigestUtil.md5(json)})-${extension?.enable}"
 
+        config = json.fromJson()
         config?.logInsn = config?.log?.toMethodInsnNode()
         val configGlobalExcludeClasses = config?.globalExcludeClasses.orEmpty()
         config?.globalExcludeClasses = mutableSetOf<String>().also {

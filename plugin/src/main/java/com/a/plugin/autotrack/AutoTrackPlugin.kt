@@ -1,6 +1,5 @@
 package com.a.plugin.autotrack
 
-import com.a.plugin.common.RecordSaveUtil
 import com.android.build.api.instrumentation.FramesComputationMode
 import com.android.build.api.instrumentation.InstrumentationScope
 import com.android.build.api.variant.AndroidComponentsExtension
@@ -21,14 +20,14 @@ class AutoTrackPlugin : Plugin<Project> {
 //            println("onVariants ,${project.name}, ${variant.name}")
             if (variant is ApplicationVariant) {
                 AutoTrackContext.configByExtension(project)
-                if (AutoTrackContext.enable) {
-                    RecordSaveUtil.initRecordFile(project.buildDir.absolutePath)
+                val context = AutoTrackContext
+                if (context.enable) {
                     listOf(
-                        AutoTrackClickAsmTransform::class.java,
-                        AutoTrackResumeAsmTransform::class.java
+                        AutoTrackClickCVFactory::class.java,
+                        AutoTrackResumeCVFactory::class.java
                     ).forEach {
                         variant.instrumentation.transformClassesWith(it, InstrumentationScope.ALL) { p ->
-                            p.configSign.set(AutoTrackContext.configSign)
+                            p.configSign.set(context.configSign)
                         }
                     }
                     variant.instrumentation.setAsmFramesComputationMode(
