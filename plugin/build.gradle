@@ -31,7 +31,7 @@ dependencies {
 }
 
 group 'com.a.asm'
-version '2.0.0-alpha03'
+version '2.0.0-alpha04-SNAPSHOT'
 
 gradlePlugin {
     plugins {
@@ -53,10 +53,33 @@ gradlePlugin {
 //        }
     }
 }
+
+def remotePush = localPropertyOf('remote.push', 'false').toBoolean()
 publishing {
     repositories {
-        maven {
-            url '../repo'
+        if (remotePush) {
+            maven {
+                allowInsecureProtocol = true
+                url localPropertyOf('remote.repo', '')
+                credentials {
+                    username = localPropertyOf('remote.username', '')
+                    password = localPropertyOf('remote.password', '')
+                }
+            }
+        } else {
+            maven {
+                url '../repo'
+            }
         }
     }
+}
+
+String localPropertyOf(String key, String defValue) {
+    def value = false
+    Properties properties = new Properties()
+    if (project.rootProject.file('local.properties').canRead()) {
+        properties.load(new FileInputStream(project.rootProject.file('local.properties')))
+        value = properties.getProperty(key, defValue)
+    }
+    return value
 }
