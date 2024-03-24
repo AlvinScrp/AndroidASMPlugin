@@ -3,8 +3,11 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+apply from: "${project.rootDir}/taskTime.gradle"
 android {
     compileSdk 32
+
+    namespace 'com.a.asm'
 
     defaultConfig {
         applicationId "com.a.asm"
